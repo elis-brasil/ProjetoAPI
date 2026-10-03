@@ -34,3 +34,4 @@ C:\Users\mauri\Desktop\C#\CsharpProjects\ProjetoAPI\ProjetoAPI\obj\Debug\net10.0
 C:\Users\mauri\Desktop\C#\CsharpProjects\ProjetoAPI\ProjetoAPI\obj\Debug\net10.0\ProjetoAPI.pdb
 C:\Users\mauri\Desktop\C#\CsharpProjects\ProjetoAPI\ProjetoAPI\obj\Debug\net10.0\ProjetoAPI.genruntimeconfig.cache
 C:\Users\mauri\Desktop\C#\CsharpProjects\ProjetoAPI\ProjetoAPI\obj\Debug\net10.0\ref\ProjetoAPI.dll
+C:\Users\mauri\Desktop\C#\CsharpProjects\ProjetoAPI\ProjetoAPI\obj\Debug\net10.0\ProjetoAPI.sourcelink.json
