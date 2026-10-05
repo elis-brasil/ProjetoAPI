@@ -39,9 +39,9 @@ public class ProdutosController : ControllerBase
     [HttpPost]
     public IActionResult AdicionarProduto([FromBody] Produto produto)
     {
-        if(produto == null || string.IsNullOrWhiteSpace(produto.Nome))
+        if(!ModelState.IsValid)
         {
-            return BadRequest("Nome do produto não pode ser vazio");
+            return BadRequest(ModelState);
         }
         Produtos.Add(produto);
         return Ok($"Produto {produto.Nome} adicionado com sucesso");
