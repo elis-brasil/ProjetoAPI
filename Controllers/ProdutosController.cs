@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjetoAPI.Models;
+using Microsoft.EntityFrameworkCore;
+using ProjetoAPI.Data;
+
 
 namespace ProjetoAPI.Controllers;
 
@@ -8,43 +11,88 @@ namespace ProjetoAPI.Controllers;
 [Route("api/[controller]")]
 public class ProdutosController : ControllerBase
 {
-    private static readonly List<Produto> Produtos = new List<Produto>
-    {
-       new Produto { Id = 1, Nome = "Produto 1", Preco = 10.99m, Quantidade = 5 },
-       new Produto { Id = 2, Nome = "Produto 2", Preco = 19.99m, Quantidade = 3 }, 
-       new Produto { Id = 3, Nome = "Produto 3", Preco = 5.99m, Quantidade = 10 },
-    };
+    private readonly AppDbContext _context;
 
-    [HttpGet]
-    public IActionResult ListarTodos()
+    public ProdutosController(AppDbContext context)
     {
-        return Ok(Produtos);
+        _context = context;
+    }
+
+    [HttpGet] 
+    public async Task<IActionResult> ListarTodos()
+    {
+        var produtos = await _context.Produtos.ToListAsync();
+        return Ok(produtos);
     }
     [HttpGet("{id}")]
-    public IActionResult BuscarID(int id)
+    public async Task<IActionResult> BuscarID(int id)
     {
         if(id <=0)
         {
             return BadRequest("ID não pode ser negativo");
         }
-        var produto = Produtos.FirstOrDefault(p => p.Id == id);
+        var produto = await _context.Produtos.FindAsync(id);
         if(produto == null)
         {
             return NotFound($"Produto com ID {id} não encontrado");
         }
-
         return Ok(produto);
     }
 
     [HttpPost]
-    public IActionResult AdicionarProduto([FromBody] Produto produto)
+    public async Task<IActionResult> AdicionarProduto([FromBody] Produto produto)
     {
         if(!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
-        Produtos.Add(produto);
+        _context.Produtos.Add(produto);
+        await _context.SaveChangesAsync();
         return Ok($"Produto {produto.Nome} adicionado com sucesso");
     }
 
+    [HttpPut("{id}")]
+    public async Task<IActionResult> AtualizarProduto(int id, [FromBody] Produto produtoAtualizado)
+    {
+ 
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var produto = await _context.Produtos.FindAsync(id);
+
+        if (produto == null)
+        {
+            return NotFound($"Produto com ID {id} não encontrado");
+        }
+
+        produto.Nome = produtoAtualizado.Nome;
+        produto.Preco = produtoAtualizado.Preco;  
+        produto.Quantidade = produtoAtualizado.Quantidade;
+   
+        await _context.SaveChangesAsync();
+        return Ok($"Produto {produto.Nome} atualizado com sucesso");
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> ExcluirProduto(int id)
+    {
+        var produto = await _context.Produtos.FindAsync(id);
+
+        if (produto == null)
+        {
+            return NotFound($"Produto com ID {id} não encontrado");
+        }
+
+        _context.Produtos.Remove(produto);    
+        await _context.SaveChangesAsync();
+        
+        return Ok($"Produto {produto.Nome} excluído com sucesso");
+    }
+
+    private bool ProdutoExists(int id)
+    {
+        return _context.Produtos.Any(e => e.Id == id);
+    }
 }

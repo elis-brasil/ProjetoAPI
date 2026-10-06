@@ -2,4 +2,4 @@ bin/
 obj/
 *.db
 *.db-shm
-*.db-wall
+*.db-wal
