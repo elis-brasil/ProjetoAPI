@@ -11,6 +11,16 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source=projetoapi.db"));
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("PermitirAngular", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,6 +34,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("PermitirAngular");
 
 app.MapControllers();
 
