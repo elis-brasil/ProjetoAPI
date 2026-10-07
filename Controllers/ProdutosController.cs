@@ -87,12 +87,8 @@ public class ProdutosController : ControllerBase
 
         _context.Produtos.Remove(produto);    
         await _context.SaveChangesAsync();
-        
+
         return Ok($"Produto {produto.Nome} excluído com sucesso");
     }
 
-    private bool ProdutoExists(int id)
-    {
-        return _context.Produtos.Any(e => e.Id == id);
-    }
 }

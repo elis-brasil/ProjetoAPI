@@ -20,13 +20,13 @@ public class ProdutoRepository : IProdutoRepository
     {
         return await _context.Produtos.FindAsync(id);
     }
-    public async Task<Produto> AdicionarProduto(Produto produto)
+    public async Task<Produto> AdicionarProdutoAsync(Produto produto)
     {
         _context.Produtos.Add(produto);
         await _context.SaveChangesAsync();
         return produto;
     }
-    public async Task<Produto?> AtualizarProduto(int id, Produto produtoAtualizado)
+    public async Task<Produto?> AtualizarProdutoAsync(int id, Produto produtoAtualizado)
     {
         var produto = await _context.Produtos.FindAsync(id);
         if (produto == null)
@@ -40,7 +40,7 @@ public class ProdutoRepository : IProdutoRepository
         await _context.SaveChangesAsync();
         return produto;
     }
-    public async Task<bool> ExcluirProduto(int id)
+    public async Task<bool> ExcluirProdutoAsync(int id)
     {
         var produto = await _context.Produtos.FindAsync(id);
         if (produto == null) return false;
@@ -48,5 +48,8 @@ public class ProdutoRepository : IProdutoRepository
         await _context.SaveChangesAsync();
         return true;
     }
-    
+    public async Task<bool> ExisteProdutoAsync(string nome)
+    {
+        return await _context.Produtos.AnyAsync(p => p.Nome == nome);
+    }
 }
