@@ -1,5 +1,7 @@
 using ProjetoAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using ProjetoAPI.Services;
+using ProjetoAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite("Data Source=projetoapi.db"));
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
 builder.Services.AddCors(options =>
 {
