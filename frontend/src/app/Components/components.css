@@ -1,0 +1,41 @@
+body { font-family: Arial, sans-serif; 
+  margin: 20px; 
+  background-color: #f4f4f9; color: #333; 
+}
+.max-container { max-width: 800px; margin: auto; }
+.form-group { margin-bottom: 15px; }
+
+label { 
+  display: block; 
+  margin-bottom: 5px; 
+  font-weight: bold; 
+}
+
+input { 
+  width: 100%; 
+  padding: 8px; 
+  box-sizing: 
+  border-box; 
+  border: 1px solid #ccc; border-radius: 4px; 
+}
+
+button { 
+  padding: 10px 15px; 
+  border: none; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  color: white; }
+
+.btn-submit { background-color: #28a745; }
+.btn-edit { background-color: #ffc107; color: black; margin-right: 5px; }
+.btn-delete { background-color: #dc3545; }
+.btn-cancel { background-color: #6c757d; margin-left: 5px; }
+
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+  margin-top: 20px; 
+  background: white; }
+  
+th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+th { background-color: #007bff; color: white; }
